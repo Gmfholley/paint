@@ -1,8 +1,11 @@
 <html>
   <head>
+    <title>Color Me Mine</title>
     <link rel="stylesheet" href="stylesheets/index.css" />
+    <meta charset="UTF-8">
+
   </head>
-  <body class="dark-theme uploaded">
+  <body class="dark-theme">
     <object type="image/svg+xml" data="images/svg-sprite.svg" class="logo"></object>
     <header>
       <img src="../images/color_me_mine_2.png" alt="logo">
@@ -17,8 +20,8 @@
       <h2>Where what you color is yours</h2>
       <section id="drop-zone">
         <h3 class="highlight">Upload a picture and begin coloring</h3>
-        <input type="file" id="imageInput" accept="image/*" />      <div id="drop">
-          <p><a href="#" id="imageSelect">open an image</a></p>
+        <input type="file" id="image-input" accept="image/*" />      <div id="drop">
+          <p><a href="#" id="image-link">open an image</a></p>
           <p>or drag an image here</p>
         </div>
 
@@ -61,12 +64,19 @@
                   <use xlink:href="#save" />
                 </svg>
               </button>
+              <div class="dropdown">
+                <button class="dropdown-toggle"></button>
+                <ul class="dropdown-content">
+                  <li id="download-png"><button>Download png</button></li>
+                  <li id="download-jpg"><button>Download jpg</button></li>
+                </ul>
+              </div>
             </li>
           </ul>
         </div>
         <div id="palette">
         </div>
-        <div id="svg-canvas"></div>
+        <div id="svg-wrapper"></div>
       </section>
     </main>
     <script src="vendor/vanilla-picker.js"></script>
@@ -77,6 +87,9 @@
     <script type="module" src="js/sprite-support.js"></script>
     <script type="module" src="js/upload.js"></script>
     <script type="module" src="js/index.js"></script>
-    <div>Icons made by <a href="https://www.flaticon.com/authors/good-ware" title="Good Ware">Good Ware</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
+    <footer>
+      <p>Site by <a href="email:gmfholley@gmail.com">@gmfholley</a></p>
+      <small>Icons made by <a href="https://www.flaticon.com/authors/good-ware" title="Good Ware">Good Ware</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></small>
+    </footer>
   </body>
 </html>

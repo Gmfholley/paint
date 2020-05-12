@@ -13,9 +13,12 @@
     "color"
   ],
   "author": "gmfholley",
-  "license": "MIT",
+  "license": "GPL-2.0",
   "dependencies": {
     "potrace-wasm": "^1.0.4",
     "vanilla-picker": "^2.10.1"
+  },
+  "devDependencies": {
+    "svgstore-cli": "^1.3.1"
   }
 }

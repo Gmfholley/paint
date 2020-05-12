@@ -26,6 +26,8 @@
 
   --transition: 3s;
 
+  --border-width: 2px;
+
 }
 
 body {
@@ -34,7 +36,7 @@ body {
   background-color: var(--background-color);
   color: var(--font-color);
   stroke: var(--font-color);
-  fill: var(--fon-color);
+  fill: var(--font-color);
 
 
 
@@ -57,6 +59,9 @@ body {
   --font-color-accent: var(--accent-color-light);
 }
 
+:focus {outline:none;}
+::-moz-focus-inner {border:0;}
+
 .highlight {
   color: var(--font-color-accent);
 }
@@ -66,18 +71,34 @@ a {
   text-decoration-color: var(--highlight-color);
 }
 
-a:hover {
+a:focus, a:active, a:hover {
   color: var(--font-color-light);
 }
 
 button {
   background-color: transparent;
   border: none;
+  color: var(--font-color);
+  padding: var(--sm-padding);
+}
+
+button:focus, button:active {
+  border: var(--border-width) solid var(--font-color);
+  border-radius: var(--xs-padding);
+  padding: calc(var(--sm-padding) - var(--border-width));
 }
 
 svg {
   fill: var(--font-color);
   stroke: var(--font-color);
+}
+
+ul {
+  padding-left: 0;
+}
+
+li {
+  list-style: none;
 }
 
 header {
@@ -112,7 +133,7 @@ object {
 }
 
 #change-theme {
-  position: absolute;
+  position: fixed;
   right: 0;
   bottom: 0;
   padding: var(--xs-padding);
@@ -145,11 +166,11 @@ main {
   height: 40%;
   margin: var(--medium-padding) 0;
   text-align: center;
-  border: var(--xs-padding) dashed var(--highlight-color);
+  border: var(--border-width) dashed var(--highlight-color);
   border-radius: var(--xs-padding);
 }
 
-#imageInput {
+#image-input {
   display: none;
 }
 
@@ -165,23 +186,56 @@ main {
   display: block;
 }
 
-.toolbar {
-  display: flex;
+#svg-wrapper {
+  max-width: 100%;
+  overflow: scroll;
 }
 
-.toolbar li {
-  list-style: none;
+.toolbar {
+  display: flex;
 }
 
 .toolbar button {
   width: 4rem;
   height: 4rem;
   background-color: var(--background-color);
-  border: none;
 }
 
 .toolbar button svg {
   width: 100%;
+  height: 100%;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.dropdown .dropdown-toggle:before {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  border-right: var(--xs-padding) solid transparent;
+  border-top: var(--xs-padding) solid var(--font-color);
+  border-left: var(--xs-padding) solid transparent;
+  border-bottom: 0 dotted;
+
+  vertical-align: middle;
+  margin-left: 2px;
+  content:'';
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+}
+
+.dropdown:hover .dropdown-content,
+.dropdown.active .dropdown-content,
+.dropdown-toggle:active + .dropdown-content,
+.dropdown-toggle:focus +.dropdown-content {
+  display: block;
 }
 
 #palette {
