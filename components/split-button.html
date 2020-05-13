@@ -1,0 +1,170 @@
+<html>
+  <head>
+    <title>Split Button Example</title>
+  </head>
+  <body>
+  <style>
+    split-button {
+      --font-color: black;
+      --font-color-light: grey;
+      --xs-padding: 0.5rem;
+
+      --border-width: 2px;
+      --xs-border-width: 1px;
+      --width: 4rem;
+      --dropdown-width: 10rem;
+    }
+
+  </style>
+  <template id="split-button">
+    <style>
+      :host {
+        display: inline-block;
+      }
+
+      .split-button {
+        display: flex;
+      }
+
+      button {
+        width: var(--width);
+        padding: calc(var(--xs-padding) - var(--xs-border-width));
+        border: var(--xs-border-width) dotted var(--font-color-light);
+        border-radius: var(--xs-padding);
+      }
+
+      .active button,
+      button:active, button:focus,
+      button:active + .dropdown button,
+      button:focus + .dropdown button {
+        padding: calc(var(--xs-padding) - var(--border-width));
+        border-color: var(--font-color);
+        border-style: solid;
+        border-width: var(--border-width);
+      }
+
+      .dropdown {
+        position: relative;
+        display: inline-block;
+        vertical-align: top;
+      }
+
+      .dropdown-toggle {
+        width: calc(var(--width) / 2);
+        height: 100%;
+        padding: 0;
+      }
+
+      /* Draw a down caret with css triangles */
+      .dropdown-toggle:before {
+        display: inline-block;
+        width: 0;
+        height: 0;
+        border-right: var(--xs-padding) solid transparent;
+        border-top: var(--xs-padding) solid var(--font-color);
+        border-left: var(--xs-padding) solid transparent;
+        border-bottom: 0 dotted;
+
+        vertical-align: middle;
+        margin-left: 2px;
+        content:'';
+      }
+
+      .dropdown-content {
+        display: none;
+        position: absolute;
+        border: var(--border-width) solid;
+        border-radius: var(--xs-padding);
+      }
+
+      .dropdown:hover .dropdown-content,
+      .dropdown.active .dropdown-content,
+      .dropdown-toggle:active + .dropdown-content,
+      .dropdown-toggle:focus +.dropdown-content {
+        display: block;
+      }
+
+      .dropdown-content button {
+        width: var(--dropdown-width);
+        height: auto;
+        text-align: left;
+      }
+
+      ul {
+        padding-left: 0;
+        margin: 0;
+        list-style-type: none;
+      }
+
+      li button {
+        width: 100%;
+      }
+
+      :focus {outline:none;}
+      ::-moz-focus-inner {border:0;}
+
+    </style>
+    <div class="split-button">
+      <button class="main">
+        <slot name="main-button"></slot>
+      </button>
+      <div class="dropdown">
+        <button class="dropdown-toggle">
+          <slot name="dropdown-button"></slot>
+        </button>
+        <ul class="dropdown-content">
+          <slot name="dropdown-content"></slot>
+        </ul>
+      </div>
+    </div>
+  </template>
+
+  <button>Regular Button</button>
+  <split-button>
+    <span slot="main-button">Main</span>
+    <div slot="dropdown-content">
+      <li><button> First</button></li>
+      <li><button> Second</button></li>
+      <li><button> Third </button></li>
+    </div>
+  </split-button>
+  <button>Regular Button</button>
+
+  <script>
+    window.onload = function() {
+      customElements.define('split-button',
+        class extends HTMLElement {
+          constructor() {
+            super();
+            let template = document.getElementById('split-button');
+            let templateContent = template.content;
+
+            this._shadowRoot = this.attachShadow({mode: 'open'})
+            this._shadowRoot.appendChild(templateContent.cloneNode(true));
+
+            this._shadowRoot.querySelector('.dropdown-toggle').addEventListener('click', () => this.toggleDropdown())
+            this._shadowRoot.querySelector('.main').addEventListener('click', () => this.pressMain())
+/*
+            this.addEventListener('keydown', e => {
+              if (e.which == 13) {
+                console.log(e.target);
+              }
+            });*/
+          }
+
+          pressMain() {
+            const mainButton = this._shadowRoot.querySelector('.main')
+            mainButton.dispatchEvent(new Event('button-press', {bubbles: true, composed: true}));
+          }
+
+          toggleDropdown() {
+            this._shadowRoot.querySelector('.dropdown').classList.toggle('active')
+          }
+        }
+      );
+
+      document.querySelector('split-button').addEventListener('button-press', () => console.log('pressed'))
+    }
+  </script>
+  </body>
+</html

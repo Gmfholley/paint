@@ -27,6 +27,7 @@
   --transition: 3s;
 
   --border-width: 2px;
+  --xs-border-width: 1px;
 
 }
 
@@ -79,13 +80,13 @@ button {
   background-color: transparent;
   border: none;
   color: var(--font-color);
-  padding: var(--sm-padding);
+  padding: var(--xs-padding);
 }
 
 button:focus, button:active {
   border: var(--border-width) solid var(--font-color);
   border-radius: var(--xs-padding);
-  padding: calc(var(--sm-padding) - var(--border-width));
+  padding: calc(var(--xs-padding) - var(--border-width));
 }
 
 svg {
@@ -204,38 +205,6 @@ main {
 .toolbar button svg {
   width: 100%;
   height: 100%;
-}
-
-.dropdown {
-  position: relative;
-  display: inline-block;
-  vertical-align: top;
-}
-
-.dropdown .dropdown-toggle:before {
-  display: inline-block;
-  width: 0;
-  height: 0;
-  border-right: var(--xs-padding) solid transparent;
-  border-top: var(--xs-padding) solid var(--font-color);
-  border-left: var(--xs-padding) solid transparent;
-  border-bottom: 0 dotted;
-
-  vertical-align: middle;
-  margin-left: 2px;
-  content:'';
-}
-
-.dropdown-content {
-  display: none;
-  position: absolute;
-}
-
-.dropdown:hover .dropdown-content,
-.dropdown.active .dropdown-content,
-.dropdown-toggle:active + .dropdown-content,
-.dropdown-toggle:focus +.dropdown-content {
-  display: block;
 }
 
 #palette {
