@@ -1,0 +1,139 @@
+<html>
+  <head>
+    <title>Split Button Example</title>
+  </head>
+  <body>
+  <style>
+    split-button {
+      --split-font-color: black;
+      --split-font-color-light: grey;
+      --split-background-color: yellow;
+      --split-xs-padding: 0.5rem;
+
+      --split-border-width: 2px;
+      --split-xs-border-width: 1px;
+      --split-width: 4rem;
+      --split-height: 4rem;
+      --split-dropdown-width: 10rem;
+    }
+
+    ul {
+      padding-left: 0;
+      margin: 0;
+      list-style-type: none;
+    }
+
+    li button {
+      width: 100%;
+    }
+  </style>
+  <template id="split-button">
+    <style>
+      :host {
+        display: inline-block;
+        height: var(--split-height);
+      }
+
+      .split-button {
+        display: flex;
+      }
+
+      button {
+        width: var(--split-width);
+        padding: calc(var(--split-xs-padding) - var(--split-xs-border-width));
+        background-color: var(--split-background-color);
+        color: var(--split-font-color);
+        border: var(--split-xs-border-width) dotted var(--split-font-color-light);
+        border-radius: var(--split-xs-padding);
+      }
+
+      .active button,
+      button:active, button:focus,
+      button:active + .dropdown button,
+      button:focus + .dropdown button {
+        padding: calc(var(--split-xs-padding) - var(--split-border-width));
+        border-color: var(--split-font-color);
+        border-style: solid;
+        border-width: var(--split-border-width);
+      }
+
+      .dropdown {
+        position: relative;
+        display: inline-block;
+        vertical-align: top;
+      }
+
+      .dropdown-toggle {
+        width: calc(var(--split-width) / 2);
+        height: 100%;
+        padding: 0;
+      }
+
+      /* Draw a down caret with css triangles */
+      .dropdown-toggle:before {
+        display: inline-block;
+        width: 0;
+        height: 0;
+        border-right: var(--split-xs-padding) solid transparent;
+        border-top: var(--split-xs-padding) solid var(--split-font-color);
+        border-left: var(--split-xs-padding) solid transparent;
+        border-bottom: 0 dotted;
+
+        vertical-align: middle;
+        margin-left: 2px;
+        content:'';
+      }
+
+      .dropdown-content {
+        display: none;
+        position: absolute;
+        border: var(--split-border-width) solid;
+        border-radius: var(--split-xs-padding);
+      }
+
+      .dropdown:hover .dropdown-content,
+      .dropdown.active .dropdown-content,
+      .dropdown-toggle:active + .dropdown-content,
+      .dropdown-toggle:focus +.dropdown-content {
+        display: block;
+      }
+
+      .dropdown-content button {
+        width: var(--split-dropdown-width);
+        height: auto;
+        text-align: left;
+      }
+
+      :focus {outline:none;}
+      ::-moz-focus-inner {border:0;}
+
+    </style>
+    <div class="split-button">
+      <button class="main">
+        <slot name="main-button"></slot>
+      </button>
+      <div class="dropdown">
+        <button class="dropdown-toggle">
+          <slot name="dropdown-button"></slot>
+        </button>
+        <div class="dropdown-content">
+          <slot name="dropdown-content"></slot>
+        </div>
+      </div>
+    </div>
+  </template>
+
+  <button>Regular Button</button>
+  <split-button>
+    <span slot="main-button">Main</span>
+    <ul slot="dropdown-content">
+      <li><button> First</button></li>
+      <li><button> Second</button></li>
+      <li><button> Third </button></li>
+    </ul>
+  </split-button>
+  <button>Regular Button</button>
+
+  <script src="split-button.js"></script>
+  </body>
+</html

@@ -5,8 +5,9 @@
     <meta charset="UTF-8">
 
   </head>
-  <body class="dark-theme">
+  <body class="dark-theme uploaded">
     <object type="image/svg+xml" data="images/svg-sprite.svg" class="logo"></object>
+    <object type="text/html" data="components/split-button.html" class="split-button"></object>
     <header>
       <img src="../images/color_me_mine_2.png" alt="logo">
       <button id="change-theme">
@@ -59,20 +60,17 @@
               </button>
             </li>
             <li>
-              <div class="split-button">
-                <button class="main" id="download">
+              <split-button>
+                <div slot="main-button">
                   <svg class="icon">
                     <use xlink:href="#save" />
                   </svg>
-                </button>
-                <div class="dropdown">
-                  <button class="dropdown-toggle"></button>
-                  <ul class="dropdown-content">
-                    <li id="download-png"><button>Download png</button></li>
-                    <li id="download-jpg"><button>Download jpg</button></li>
-                  </ul>
                 </div>
-              </div>
+                <ul slot="dropdown-content">
+                  <li id="download-png"><button>Download png</button></li>
+                  <li id="download-jpg"><button>Download jpg</button></li>
+                </ul>
+              </split-button>
             </li>
           </ul>
         </div>

@@ -4,3 +4,10 @@ export function moveSpriteInline(element) {
 
   document.body.appendChild(svg.cloneNode(true));
 }
+
+export function moveTemplate(element) {
+  let template = element.contentDocument.querySelector('template')
+  template.style.display = 'none'
+
+  document.body.appendChild(template.cloneNode(true));
+}
