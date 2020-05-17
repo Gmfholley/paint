@@ -2,7 +2,7 @@ import { getCurrentDimensions } from './helpers.js'
 
 export function downloadSvgElement(element) {
   const svgData = `data:image/svg+xml;utf8,${encodeURIComponent(element.outerHTML)}`
-  const downloadName = fileName(getStoredFilename(), "svg")
+  const downloadName = getFileName(getStoredFilename(element), "svg")
   download(svgData, downloadName)
 }
 
