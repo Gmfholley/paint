@@ -23,7 +23,7 @@ This is a very simplified site with no minification, tasks, or bundling.  I've i
 ## Local Tasks
 
 ### Sprite sheets
-Svgs are defined on a sprite sheet in `images/svg-sprite.svg` and included in `index.html` as an object.  On window load, JavaScript moves those definitions inline.
+Svgs are defined on a sprite sheet in `images/svg-sprite.svg` and included in `index.html` as an object.  On window load, JavaScript moves those definitions inline, but that only works locally on Firefox without adjustment (or by adjusting Chrome settings).
 
 To add/change sprites:
 1. Add sprites to the `images/icons` folder with an extension of `.svg`.
