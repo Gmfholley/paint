@@ -1,3 +1,5 @@
+import { downloadSvgElement, downloadSvgAsType, test } from "./download.js"
+
 export function changeTheme() {
   document.querySelector('body').classList.toggle("dark-theme")
 }
@@ -12,10 +14,14 @@ export function minifySvg(parent) {
 }
 
 export function downloadSvg(parent) {
-  download(parent.querySelector('svg'))
+  downloadSvgElement(parent.querySelector('svg'))
 }
 
-function getCurrentDimensions(element) {
+export function downloadSvgElementAsType(parent, type) {
+  downloadSvgAsType(parent.querySelector('svg'), type)
+}
+
+export function getCurrentDimensions(element) {
   const styles = window.getComputedStyle(element)
   return { width: parseInt(styles["width"]), height: parseInt(styles["height"]) }
 }
@@ -70,13 +76,4 @@ function minify(element) {
   }
 }
 
-function download(element) {
-  let a = document.createElement('a');
-
-  a.href = `data:image/svg+xml;utf8,${encodeURIComponent(element.outerHTML)}`
-  a.download = "output.svg";
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-}
 

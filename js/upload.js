@@ -4,6 +4,7 @@ export function uploadToSvg(files, displayElement) {
   let tempImg = document.createElement("img");
   let fr = new FileReader();
   let file = files[0];
+  displayElement.dataset.fileName = file.name.split(".")[0]
   if (file.type === "image/svg+xml") {
     tempImg.onload = displaySvg.bind(this, tempImg, displayElement)
   } else {
@@ -12,7 +13,7 @@ export function uploadToSvg(files, displayElement) {
   fr.onload = function () {
     tempImg.src = fr.result;
   }
-  fr.readAsDataURL(files[0]);
+  fr.readAsDataURL(file);
 }
 
 function displaySvg(tempImg, displayElement) {
@@ -37,6 +38,7 @@ function drawSvg(svgData, dataType, displayElement) {
 }
 
 function addSvg(svg, displayElement) {
+  svg.dataset.fileName = displayElement.dataset.fileName
   displayElement.innerHTML = '';
   displayElement.appendChild(svg);
   document.querySelector('body').classList.add("uploaded")
