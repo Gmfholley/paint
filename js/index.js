@@ -1,5 +1,5 @@
 import { uploadToSvg } from './upload.js'
-import { getBackgroundColor, createPalettePicker } from './color-picker.js'
+import { getBackgroundColor, createPalettePicker, color } from './color-picker.js'
 import { moveSpriteInline, moveTemplate } from './sprite-support.js'
 import { changeTheme, magnifySvg, minifySvg, downloadSvg, downloadSvgElementAsType } from './helpers.js'
 import { splitButtonSetup } from './split-button.js'
@@ -48,4 +48,5 @@ window.onload = function() {
   const templateSelector = "template#split-button"
   const buttonOnClick = downloadSvg.bind(this, svgWrapper)
   splitButtonSetup(templateSelector, buttonOnClick)
+  svgWrapper.addEventListener('click', color)
 }

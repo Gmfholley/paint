@@ -238,6 +238,9 @@ split-button {
 }
 
 #palette {
-  height: 20px;
-  background-color: red;
+  width: 100%
+}
+
+#palette .picker_done {
+  display: none;
 }
