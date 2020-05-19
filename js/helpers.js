@@ -1,4 +1,4 @@
-import { downloadSvgElement, downloadSvgAsType, test } from "./download.js"
+import { downloadSvgElement, downloadSvgAsType } from "./download.js"
 
 export function changeTheme() {
   document.querySelector('body').classList.toggle("dark-theme")

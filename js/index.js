@@ -1,15 +1,16 @@
 import { uploadToSvg } from './upload.js'
 import { getBackgroundColor, createPalettePicker, color } from './color-picker.js'
-import { moveSpriteInline, moveTemplate } from './sprite-support.js'
+import { moveContentInline } from './content-support.js'
 import { changeTheme, magnifySvg, minifySvg, downloadSvg, downloadSvgElementAsType } from './helpers.js'
 import { splitButtonSetup } from './split-button.js'
+
 
 window.onload = function() {
   let imageLink = document.querySelector("#image-link"),
     imageInput = document.querySelector("#image-input"),
     svgWrapper = document.querySelector("#svg-wrapper"),
     palette = document.querySelector("#palette"),
-    spriteSheet = document.querySelector('object');
+    spriteSheet = document.querySelector('object.logo');
 
   imageLink.addEventListener(
     "click",
@@ -40,13 +41,13 @@ window.onload = function() {
   document.querySelector('#download-jpg').addEventListener('click', downloadSvgElementAsType.bind(this, svgWrapper, "image/jpeg"))
 
   // tasks
-  moveSpriteInline(spriteSheet)
-  moveTemplate(document.querySelector(".split-button"))
   createPalettePicker(palette)
+  svgWrapper.addEventListener('click', color)
+  moveContentInline(document.querySelector('object.split-button'))
+  moveContentInline(document.querySelector('object.logo'))
 
   // Split button setup
   const templateSelector = "template#split-button"
   const buttonOnClick = downloadSvg.bind(this, svgWrapper)
   splitButtonSetup(templateSelector, buttonOnClick)
-  svgWrapper.addEventListener('click', color)
 }
