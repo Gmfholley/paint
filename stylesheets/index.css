@@ -31,7 +31,14 @@
 
 }
 
+html {
+  height: 100%;
+}
+
 body {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
   margin: 0;
   font-family: 'Jost', sans-serif;
   background-color: var(--background-color);
@@ -125,7 +132,7 @@ header img {
 object {
   /* Chrome does not load content if element is not displayed */
   height: 0;
-  width: 100%;
+  width: 0;
 }
 
 .uploaded header {
@@ -152,10 +159,11 @@ object {
   height: 2rem;
 }
 
+/* Positioning elements */
 main {
+  flex: 1 0 auto;
   padding: var(--medium-padding);
   padding-top: calc(var(--header-height) + var(--medium-padding));
-  margin: 0 auto;
   max-width: var(--max-width);
   transition: var(--transition);
 }
@@ -163,6 +171,21 @@ main {
 .uploaded main {
   padding: var(--medium-padding);
   transition: var(--transition);
+}
+
+@media only screen and (max-width: 600px) {
+  main {
+    padding: var(--sm-padding);
+  }
+}
+
+header {
+  flex-shrink: 0;
+}
+
+footer {
+  flex-shrink: 0;
+  padding: var(--medium-padding);
 }
 
 #drop {
@@ -201,6 +224,7 @@ main {
 
 .toolbar {
   display: flex;
+  flex-wrap: wrap;
 }
 
 .toolbar button {
