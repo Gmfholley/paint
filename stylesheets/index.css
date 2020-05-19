@@ -7,11 +7,15 @@
 
   --main-color: #6c00bc;
   --main-color-dark: #34008b;
+  --main-color-dark-hsla: hsla(262, 100%, 27%, 1);
+  --main-color-dark-hsla-70: hsla(262, 100%, 27%, 0.7);
   --main-color-light: #a143f0;
   --accent-color-dark: #c51a74;
   --accent-color-light: #ff8ed4;
 
   --main-bg-color: #fffffe;
+  --main-bg-color-hsla: hsla(60, 100%, 100%, 1);
+  --main-bg-color-hsla-70: hsla(60, 100%, 100%, 0.7);
   --main-bg-color-dark: #cccccb;
   --main-bg-color-light: #ffffff;
 
@@ -49,6 +53,8 @@ body {
 
 
   --background-color: var(--main-bg-color);
+  --background-color-hsla: var(--main-bg-color-hsla);
+  --background-color-hsla-70: var(--main-bg-color-hsla-70);
   --background-color-dark: var(--main-bg-color-dark);
   --background-color-light: var(--main-bg-color-light);
   --font-color: var(--main-color);
@@ -59,6 +65,8 @@ body {
 
 .dark-theme {
   --background-color: var(--main-color-dark);
+  --background-color-hsla: var(--main-color-dark-hsla);
+  --background-color-hsla-70: var(--main-color-dark-hsla-70);
   --background-color-dark: var(--main-color);
   --background-color-light: var(--main-color-light);
   --font-color: var(--main-bg-color);
@@ -162,9 +170,11 @@ object {
 /* Positioning elements */
 main {
   flex: 1 0 auto;
+  align-self: center;
   padding: var(--medium-padding);
   padding-top: calc(var(--header-height) + var(--medium-padding));
   max-width: var(--max-width);
+  width: calc(100% - var(--medium-padding) * 2);
   transition: var(--transition);
 }
 
@@ -185,6 +195,9 @@ header {
 
 footer {
   flex-shrink: 0;
+  align-self: center;
+  width: calc(100% - var(--medium-padding) - var(--medium-padding));
+  max-width: var(--max-width);
   padding: var(--medium-padding);
 }
 
@@ -193,8 +206,8 @@ footer {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: calc(100% - var(--sm-padding));
-  height: 40%;
+  /*width: calc(100% - var(--sm-padding));*/
+  height: 40rem;
   margin: var(--medium-padding) 0;
   text-align: center;
   border: var(--border-width) dashed var(--highlight-color);
@@ -271,4 +284,14 @@ split-button {
 
 #palette .picker_done {
   display: none;
+}
+
+#svg-wrapper {
+  background: repeating-linear-gradient(
+    45deg,
+    var(--background-color-hsla-70),
+    var(--background-color-hsla-70) 10px,
+    hsla(120,100%,50%,0) 10px,
+    hsla(120,100%,50%,0) 20px
+  );
 }
