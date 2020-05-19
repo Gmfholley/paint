@@ -9,7 +9,6 @@ export function downloadSvgElement(element) {
 export function downloadSvgAsType(svgElement, downloadType = "image/png") {
   const extension = downloadType.split("/")[1]
   const asFileName = getFileName(getStoredFilename(svgElement), extension)
-  const url = convertToObjectUrl(svgElement)
   const img = new Image()
   img.onload = convertAndDownloadImg.bind(this, img, downloadType, asFileName, getCurrentDimensions(svgElement))
   img.src = convertToObjectUrl(svgElement);

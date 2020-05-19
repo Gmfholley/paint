@@ -7,7 +7,7 @@ export function getBackgroundColor(element) {
 
 // Picker is a global
 export function createPalettePicker(element) {
-    picker = new Picker(element);
+    picker = new Picker(element); // eslint-disable-line no-undef
     picker.setOptions({ popup: false })
     picker.show()
     element.style.background = picker.color.rgbaString

@@ -9,8 +9,7 @@ window.onload = function() {
   let imageLink = document.querySelector("#image-link"),
     imageInput = document.querySelector("#image-input"),
     svgWrapper = document.querySelector("#svg-wrapper"),
-    palette = document.querySelector("#palette"),
-    spriteSheet = document.querySelector('object.logo');
+    palette = document.querySelector("#palette");
 
   imageLink.addEventListener(
     "click",
@@ -21,7 +20,7 @@ window.onload = function() {
     false
   );
 
-  imageInput.addEventListener("change", function(e) { uploadToSvg(this.files, svgWrapper) }, false);
+  imageInput.addEventListener("change", function() { uploadToSvg(this.files, svgWrapper) }, false);
 
   document.querySelector('body').addEventListener(
     "click",
