@@ -50,3 +50,12 @@ Or with python:
 ```
 
 If you then visit local host and the port specified in a browser, it will server the `index.html` file.
+
+### Linting
+This repo uses Eslint rules.
+
+Run the command below to run this locally.
+
+```
+   $ npx eslint ./js/*.js
+```

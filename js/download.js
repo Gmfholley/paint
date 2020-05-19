@@ -2,14 +2,13 @@ import { getCurrentDimensions } from './helpers.js'
 
 export function downloadSvgElement(element) {
   const svgData = `data:image/svg+xml;utf8,${encodeURIComponent(element.outerHTML)}`
-  const downloadName = fileName(getStoredFilename(), "svg")
+  const downloadName = getFileName(getStoredFilename(element), "svg")
   download(svgData, downloadName)
 }
 
 export function downloadSvgAsType(svgElement, downloadType = "image/png") {
   const extension = downloadType.split("/")[1]
   const asFileName = getFileName(getStoredFilename(svgElement), extension)
-  const url = convertToObjectUrl(svgElement)
   const img = new Image()
   img.onload = convertAndDownloadImg.bind(this, img, downloadType, asFileName, getCurrentDimensions(svgElement))
   img.src = convertToObjectUrl(svgElement);
@@ -57,30 +56,4 @@ function download(data, downloadName) {
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
-}
-
-export function test(svg) {
-  var canvas = document.createElement('canvas');
-
-  let ctx = canvas.getContext('2d');
-
-  var data = (new XMLSerializer()).serializeToString(svg);
-  var DOMURL = window.URL || window.webkitURL || window;
-
-  var img = new Image();
-  var svgBlob = new Blob([data], {type: 'image/svg+xml;charset=utf-8'});
-  var url = DOMURL.createObjectURL(svgBlob);
-
-  img.onload = function () {
-    ctx.drawImage(img, 0, 0, dimensions.width, dimensions.height);
-    DOMURL.revokeObjectURL(url);
-
-    var imgURI = canvas
-        .toDataURL('image/png')
-        .replace('image/png', 'image/octet-stream');
-
-    download(imgURI);
-  };
-
-  img.src = url;
 }
