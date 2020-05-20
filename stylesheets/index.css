@@ -7,11 +7,13 @@
 
   --main-color: #6c00bc;
   --main-color-dark: #34008b;
+  --main-color-light-hsla-20: hsla(273, 85%, 60%, .2);
   --main-color-light: #a143f0;
   --accent-color-dark: #c51a74;
   --accent-color-light: #ff8ed4;
 
   --main-bg-color: #fffffe;
+  --main-bg-color-dark-20: hsla(60, 1%, 80%, .2);
   --main-bg-color-dark: #cccccb;
   --main-bg-color-light: #ffffff;
 
@@ -28,10 +30,16 @@
 
   --border-width: 2px;
   --xs-border-width: 1px;
+}
 
+html {
+  height: 100%;
 }
 
 body {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
   margin: 0;
   font-family: 'Jost', sans-serif;
   background-color: var(--background-color);
@@ -44,6 +52,7 @@ body {
   --background-color: var(--main-bg-color);
   --background-color-dark: var(--main-bg-color-dark);
   --background-color-light: var(--main-bg-color-light);
+  --background-color-light-contrast: var(--main-bg-color-dark-20);
   --font-color: var(--main-color);
   --font-color-dark: var(--main-color-dark);
   --font-color-light: var(--main-color-light);
@@ -54,6 +63,7 @@ body {
   --background-color: var(--main-color-dark);
   --background-color-dark: var(--main-color);
   --background-color-light: var(--main-color-light);
+  --background-color-light-contrast: var(--main-color-light-hsla-20);
   --font-color: var(--main-bg-color);
   --font-color-dark: var(--main-bg-color-dark);
   --font-color-light: var(--main-bg-color-light);
@@ -125,7 +135,7 @@ header img {
 object {
   /* Chrome does not load content if element is not displayed */
   height: 0;
-  width: 100%;
+  width: 0;
 }
 
 .uploaded header {
@@ -152,11 +162,14 @@ object {
   height: 2rem;
 }
 
+/* Positioning elements */
 main {
+  flex: 1 0 auto;
+  align-self: center;
   padding: var(--medium-padding);
   padding-top: calc(var(--header-height) + var(--medium-padding));
-  margin: 0 auto;
   max-width: var(--max-width);
+  width: calc(100% - var(--medium-padding) * 2);
   transition: var(--transition);
 }
 
@@ -165,13 +178,31 @@ main {
   transition: var(--transition);
 }
 
+@media only screen and (max-width: 600px) {
+  main {
+    padding: var(--sm-padding);
+  }
+}
+
+header {
+  flex-shrink: 0;
+}
+
+footer {
+  flex-shrink: 0;
+  align-self: center;
+  width: calc(100% - var(--medium-padding) - var(--medium-padding));
+  max-width: var(--max-width);
+  padding: var(--medium-padding);
+}
+
 #drop {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: calc(100% - var(--sm-padding));
-  height: 40%;
+  /*width: calc(100% - var(--sm-padding));*/
+  height: 40rem;
   margin: var(--medium-padding) 0;
   text-align: center;
   border: var(--border-width) dashed var(--highlight-color);
@@ -201,6 +232,7 @@ main {
 
 .toolbar {
   display: flex;
+  flex-wrap: wrap;
 }
 
 .toolbar button {
@@ -223,11 +255,6 @@ main {
   height: 100%;
 }
 
-/*.toolbar split-button svg {
-  width: calc(var(--large-padding) - var(--border-width));
-  height: calc(100% - var(--xs-padding));
-}*/
-
 split-button {
   --split-background-color: var(--background-color);
   --split-font-color: var(--font-color);
@@ -247,4 +274,21 @@ split-button {
 
 #palette .picker_done {
   display: none;
+}
+
+#svg-wrapper {
+  --checkboard-contrast-color: var(--background-color-light-contrast);
+  --dimension: 20px;
+  --half-dimension: calc(var(--dimension) / 2);
+  background-image:
+    linear-gradient(45deg, var(--checkboard-contrast-color) 25%, transparent 25%),
+    linear-gradient(-45deg, var(--checkboard-contrast-color) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, var(--checkboard-contrast-color) 75%),
+    linear-gradient(-45deg, transparent 75%, var(--checkboard-contrast-color) 75%);
+  background-size: var(--dimension) var(--dimension);
+  background-position:
+    0 0,
+    0 var(--half-dimension),
+    var(--half-dimension) calc(-1 * var(--half-dimension)),
+    calc(-1 * var(--half-dimension)) 0;
 }
