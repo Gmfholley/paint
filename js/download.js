@@ -10,7 +10,7 @@ export function downloadSvgAsType(svgElement, downloadType = "image/png") {
   const extension = downloadType.split("/")[1]
   const asFileName = getFileName(getStoredFilename(svgElement), extension)
   const img = new Image()
-  img.onload = convertAndDownloadImg.bind(this, img, downloadType, asFileName, getCurrentDimensions(svgElement))
+  img.onload = convertAndDownloadImg.bind(this, img, downloadType, asFileName)
   img.src = convertToObjectUrl(svgElement);
 }
 
@@ -37,16 +37,28 @@ function createCanvasForSvg(dimensions) {
   return canvas
 }
 
-function convertAndDownloadImg(img, downloadType, filename, dimensions) {
-  const canvas = createCanvasForSvg(dimensions)
-  const ctx = canvas.getContext('2d');
-  ctx.drawImage(img, 0, 0);
-  window.URL.revokeObjectURL(img.src);
-
-  var data = canvas.toDataURL(downloadType)
-                   .replace(downloadType, 'image/octet-stream');
+function convertAndDownloadImg(img, downloadType, filename) {
+  const { width, height } = img
+  const canvas = createCanvasForSvg({ width, height })
+  drawImageOnCanvas(img, canvas)
+  const data = convertCanvasToData(canvas, downloadType)
 
   download(data, filename);
+}
+
+function drawImageOnCanvas(img, canvas) {
+  // draw image
+  const ctx = canvas.getContext('2d');
+  ctx.drawImage(img, 0, 0);
+
+  // free up object url
+  window.URL.revokeObjectURL(img.src);
+  return canvas;
+}
+
+function convertCanvasToData(canvas, downloadType) {
+  return canvas.toDataURL(downloadType)
+               .replace(downloadType, 'image/octet-stream');
 }
 
 function download(data, downloadName) {
