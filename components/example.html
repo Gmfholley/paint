@@ -31,7 +31,7 @@
     <style>
       :host {
         display: inline-block;
-        height: var(--split-height);
+        transition: var(--transition);
       }
 
       .split-button {
@@ -45,6 +45,7 @@
         color: var(--split-font-color);
         border: var(--split-xs-border-width) dotted var(--split-font-color-light);
         border-radius: var(--split-xs-padding);
+        transition: var(--transition);
       }
 
       .active button,

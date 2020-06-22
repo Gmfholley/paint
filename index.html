@@ -21,7 +21,7 @@
       <section id="drop-zone">
         <h3 class="highlight">Upload a picture and begin coloring</h3>
         <input type="file" id="image-input" accept="image/*" />      <div id="drop">
-          <p><a href="#" id="image-link">open an image</a></p>
+          <p><a href="#" id="image-upload">open an image</a></p>
           <p>or drag an image here</p>
         </div>
 
@@ -41,6 +41,13 @@
               <button id="minus">
                 <svg class="icon">
                   <use xlink:href="#magnifying-glass-minus" />
+                </svg>
+              </button>
+            </li>
+            <li>
+              <button id="bucket" class="active">
+                <svg class="icon">
+                  <use xlink:href="#paint-bucket" />
                 </svg>
               </button>
             </li>
@@ -66,6 +73,7 @@
                   </svg>
                 </div>
                 <ul slot="dropdown-content">
+                  <li id="download-svg"><button>Download svg</button></li>
                   <li id="download-png"><button>Download png</button></li>
                   <li id="download-jpg"><button>Download jpg</button></li>
                 </ul>
@@ -82,8 +90,9 @@
       </section>
     </main>
     <footer>
-      <p>Site by <a href="email:gmfholley@gmail.com">@gmfholley</a></p>
-      <small>Icons made by <a href="https://www.flaticon.com/authors/good-ware" title="Good Ware">Good Ware</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></small>
+      <p>Site by <a href="email:gmfholley@gmail.com">@gmfholley</a> | <a href="https://github.com/Gmfholley/paint">Source Code</a></p>
+      <p><small>Built using <a href="https://github.com/IguteChung/potrace-wasm">potrace-wasm</a> and <a href="https://vanilla-picker.js.org/">vanilla-picker</a></small></p>
+      <p><small>Icons made by <a href="https://www.flaticon.com/authors/good-ware" title="Good Ware">Good Ware</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></small><p>
     </footer>
     <object type="image/svg+xml" data="images/svg-sprite.svg" class="logo"></object>
     <object type="text/html" data="components/split-button.html" class="split-button"></object>

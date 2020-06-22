@@ -1,5 +1,5 @@
-var picker
-var usedColors = []
+window.picker = {}
+window.usedColors = []
 
 export function getBackgroundColor(element) {
   return window.getComputedStyle(element)["background-color"]
@@ -7,7 +7,8 @@ export function getBackgroundColor(element) {
 
 // Picker is a global
 export function createPalettePicker(element) {
-    picker = new Picker(element); // eslint-disable-line no-undef
+    window.picker = new Picker(element); // eslint-disable-line no-undef
+    const picker = window.picker
     picker.setOptions({ popup: false })
     picker.show()
     element.style.background = picker.color.rgbaString
@@ -18,9 +19,11 @@ export function createPalettePicker(element) {
 }
 
 export function color(event) {
-  const color = picker.color
+  if (window.paintActivated) { return }
+
+  const color = window.picker.color
   const rgba = color.rgbaString
   event.target.style.fill = rgba
   event.target.style.stroke = rgba
-  usedColors.push(color)
+  window.usedColors.push(color)
 }
