@@ -1,4 +1,5 @@
 import { downloadSvgElement, downloadSvgAsType } from "./download.js"
+import { paintOnSvg } from './paintbrush.js'
 
 export function changeTheme() {
   document.querySelector('body').classList.toggle("dark-theme")
@@ -19,6 +20,12 @@ export function downloadSvg(parent) {
 
 export function downloadSvgElementAsType(parent, type) {
   downloadSvgAsType(parent.querySelector('svg'), type)
+}
+
+export function paintOnSvgIfClicked(parent, event) {
+  if (event.buttons) {
+    paintOnSvg(parent.querySelector('svg'), event)
+  }
 }
 
 export function getCurrentDimensions(element) {

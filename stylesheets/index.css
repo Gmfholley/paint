@@ -97,7 +97,7 @@ split-button {
   padding-top: 0px;
 }
 
-button:focus, button:active {
+button:focus, button:active, button.active {
   border: var(--border-width) solid var(--font-color);
   border-radius: var(--xs-padding);
   padding: calc(var(--xs-padding) - var(--border-width));

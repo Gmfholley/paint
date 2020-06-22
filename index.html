@@ -21,7 +21,7 @@
       <section id="drop-zone">
         <h3 class="highlight">Upload a picture and begin coloring</h3>
         <input type="file" id="image-input" accept="image/*" />      <div id="drop">
-          <p><a href="#" id="image-link">open an image</a></p>
+          <p><a href="#" id="image-upload">open an image</a></p>
           <p>or drag an image here</p>
         </div>
 
@@ -41,6 +41,13 @@
               <button id="minus">
                 <svg class="icon">
                   <use xlink:href="#magnifying-glass-minus" />
+                </svg>
+              </button>
+            </li>
+            <li>
+              <button id="bucket" class="active">
+                <svg class="icon">
+                  <use xlink:href="#paint-bucket" />
                 </svg>
               </button>
             </li>
