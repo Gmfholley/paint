@@ -36,6 +36,7 @@ window.onload = function() {
   document.querySelector('#change-theme').addEventListener('click', changeTheme)
   document.querySelector('#plus').addEventListener('click', magnifySvg.bind(this, svgWrapper))
   document.querySelector('#minus').addEventListener('click', minifySvg.bind(this, svgWrapper))
+  document.querySelector('#download-svg').addEventListener('click', downloadSvg.bind(this, svgWrapper))
   document.querySelector('#download-png').addEventListener('click', downloadSvgElementAsType.bind(this, svgWrapper, "image/png"))
   document.querySelector('#download-jpg').addEventListener('click', downloadSvgElementAsType.bind(this, svgWrapper, "image/jpeg"))
 
