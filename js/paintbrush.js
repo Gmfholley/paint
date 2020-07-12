@@ -1,6 +1,6 @@
 
 export function paintOnSvg(svg, event) {
-  if (!window.paintActivated) { return }
+  if (window.activeTool !== "paint") { return }
 
   const color = window.picker.color // eslint-disable-line
   const rgba = color.rgbaString
@@ -19,8 +19,8 @@ export function paintOnSvg(svg, event) {
 
 export function getCoordinatesRelativeToElement(event, element) {
   const rect = element.getBoundingClientRect()
-  const width = parseInt(element.getAttribute("width"))
-  const height = parseInt(element.getAttribute("height"))
+  const width = parseInt(element.getAttribute("width")) || rect.width
+  const height = parseInt(element.getAttribute("height")) || rect.height
 
   const relXPos = event.clientX - rect.x
   const relYPos = event.clientY - rect.y
@@ -31,8 +31,15 @@ export function getCoordinatesRelativeToElement(event, element) {
   return [equivalentPosX, equivalentPosY]
 }
 
-export function toggleActivatePaint(element1, element2) {
-  window.paintActivated = !window.paintActivated
-  element1.classList.toggle('active')
-  element2.classList.toggle('active')
+export function activateTool(element, toolbarSelector) {
+  window.activeTool = element.getAttribute("id");
+  const toolItems = document.querySelectorAll(toolbarSelector);
+
+  Array.from(toolItems).forEach((el) => {
+    if (el.getAttribute("id") === window.activeTool) {
+      el.classList.add("active")
+    } else {
+      el.classList.remove("active")
+    }
+  });
 }
