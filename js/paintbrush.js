@@ -1,8 +1,9 @@
+import { getGlobal, setGlobal } from './color-me-mine.js'
 
 export function paintOnSvg(svg, event) {
-  if (window.activeTool !== "paint") { return }
+  if (getGlobal("activeTool") !== "paint") { return }
 
-  const color = window.picker.color // eslint-disable-line
+  const color = getGlobal("picker").color
   const rgba = color.rgbaString
 
   // Create
@@ -74,7 +75,8 @@ function getComputedHeightWidth(element) {
 export function activateTool(element, toolbarSelector) {
   const tool = element.getAttribute("id")
   const body = document.querySelector("body")
-  window.activeTool = tool
+
+  setGlobal("activeTool", tool)
 
   const toolItems = document.querySelectorAll(toolbarSelector);
   Array.from(toolItems).forEach((el) => {
