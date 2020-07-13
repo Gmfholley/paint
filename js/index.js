@@ -9,7 +9,10 @@ import {
   downloadSvgElementAsType,
   paintOnSvgIfClicked
 } from './helpers.js'
-import { activateTool } from './paintbrush.js'
+import {
+  activateTool,
+  changeBrushSize
+} from './paintbrush.js'
 import {
   splitButtonSetup,
   splitButtonOnClick,
@@ -65,6 +68,11 @@ window.onload = function() {
     }
 
     element.addEventListener('click', callback, true)
+  })
+
+  const brushSelectors = '#paint .brush';
+  Array.from(document.querySelectorAll(brushSelectors)).forEach(element => {
+    element.addEventListener('click', changeBrushSize.bind(this, element, brushSelectors), true)
   })
 
   document.querySelector('#download-svg').addEventListener('click', buttonOnClick)

@@ -3,7 +3,7 @@ export const initGlobals = () => {
     usedColors: [],
     picker: null,
     activeTool: null,
-    brushSize: 'medium',
+    brushSize: '20',
   }
 }
 

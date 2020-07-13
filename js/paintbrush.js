@@ -4,6 +4,7 @@ export function paintOnSvg(svg, event) {
   if (getGlobal("activeTool") !== "paint") { return }
 
   const color = getGlobal("picker").color
+  const brushSize = getGlobal("brushSize")
   const rgba = color.rgbaString
 
   // Create
@@ -11,11 +12,27 @@ export function paintOnSvg(svg, event) {
   const [x, y] = getCoordinatesRelativeToElement(event, svg)
   circle.setAttribute("fill", rgba)
   circle.setAttribute("stroke", rgba)
-  circle.setAttribute("r", "30")
+  circle.setAttribute("r", brushSize)
   circle.setAttribute("cx", x)
   circle.setAttribute("cy", y)
 
   svg.appendChild(circle);
+}
+
+export function changeBrushSize(element, brushSelectors) {
+  const brushSize = element.dataset.brushSize
+  setGlobal("brushSize", brushSize)
+  const brushes = document.querySelectorAll(brushSelectors)
+
+   Array.from(brushes).forEach((el) => {
+    const elBrushSize = el.dataset.brushSize
+    if (elBrushSize === brushSize) {
+      el.classList.add("active")
+    } else {
+      el.classList.remove("active")
+    }
+  });
+
 }
 
 export function getCoordinatesRelativeToElement(event, element) {
