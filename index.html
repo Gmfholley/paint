@@ -52,11 +52,18 @@
               </button>
             </li>
             <li>
-              <button class="tool" id="paint">
-                <svg class="icon">
-                  <use xlink:href="#paintbrush" />
-                </svg>
-              </button>
+              <split-button class="tool" id="paint">
+                <button slot="main-button">
+                  <svg class="icon">
+                    <use xlink:href="#paintbrush" />
+                  </svg>
+                </button>
+                <ul slot="dropdown-content">
+                  <li id="brush-small"><button>Small brush</button></li>
+                  <li id="brush-medium"><button>Medium brush</button></li>
+                  <li id="brush-large"><button class="active">Large brush</button></li>
+                </ul>
+              </split-button>
             </li>
             <li>
               <button class="tool" id="picker">
@@ -66,12 +73,12 @@
               </button>
             </li>
             <li>
-              <split-button>
-                <div slot="main-button">
+              <split-button id="download">
+                <button slot="main-button">
                   <svg class="icon">
                     <use xlink:href="#save" />
                   </svg>
-                </div>
+                </button>
                 <ul slot="dropdown-content">
                   <li id="download-svg"><button>Download svg</button></li>
                   <li id="download-png"><button>Download png</button></li>

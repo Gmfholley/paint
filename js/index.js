@@ -10,7 +10,10 @@ import {
   paintOnSvgIfClicked
 } from './helpers.js'
 import { activateTool } from './paintbrush.js'
-import { splitButtonSetup } from './split-button.js'
+import {
+  splitButtonSetup,
+  splitButtonOnClick,
+} from './split-button.js'
 
 window.onload = function() {
   let imageUpload = document.querySelector("#image-upload"),
@@ -37,7 +40,8 @@ window.onload = function() {
   // Split button setup
   const templateSelector = "template#split-button"
   const buttonOnClick = downloadSvg.bind(this, svgWrapper)
-  splitButtonSetup(templateSelector, buttonOnClick)
+  splitButtonSetup(templateSelector)
+  splitButtonOnClick(document.querySelector('#download'), buttonOnClick)
 
   // tasks
   createPalettePicker(palette)
@@ -54,7 +58,12 @@ window.onload = function() {
 
   const toolSelectors = '.toolbar .tool';
   Array.from(document.querySelectorAll(toolSelectors)).forEach(element => {
-    element.addEventListener('click', activateTool.bind(this, element, toolSelectors), true)
+    const callback= activateTool.bind(this, element, toolSelectors)
+    if (element.tagName === 'split-button') {
+      return splitButtonOnClick(element, callback, true)
+    }
+
+    element.addEventListener('click', callback, true)
   })
 
   document.querySelector('#download-svg').addEventListener('click', buttonOnClick)
