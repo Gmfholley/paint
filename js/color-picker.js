@@ -1,25 +1,49 @@
 window.picker = {}
 window.usedColors = []
 
-export function getBackgroundColor(element) {
-  return window.getComputedStyle(element)["background-color"]
+export function realColorAttribute(element, attribute = "background-color") {
+  const transparent = 'rgba(0, 0, 0, 0)'
+  if (!element) return transparent;
+
+  const bgColor = window.getComputedStyle(element)[attribute];
+  if (bgColor === transparent) {
+    return realColorAttribute(element.parentElement);
+  } else {
+    return bgColor;
+  }
+}
+
+export function getFillColor(element) {
+  return window.getComputedStyle(element).fill
 }
 
 // Picker is a global
-export function createPalettePicker(element) {
-    window.picker = new Picker(element); // eslint-disable-line no-undef
+export function createPalettePicker(paletteElement) {
+    window.picker = new Picker(paletteElement); // eslint-disable-line no-undef
     const picker = window.picker
     picker.setOptions({ popup: false })
     picker.show()
-    element.style.background = picker.color.rgbaString
+    paletteElement.style.background = picker.color.rgbaString
 
     picker.onChange = function(color) {
-      element.style.background = color.rgbaString;
+      paletteElement.style.background = color.rgbaString;
     };
 }
 
+export function colorPicker(event) {
+  if (window.activeTool !== "picker") { return }
+  let attribute = "background-color"
+
+  if (event.target instanceof SVGElement) {
+    attribute = "fill"
+  }
+
+  const observedColor = realColorAttribute(event.target, attribute);
+  window.picker.setColor(observedColor);
+}
+
 export function color(event) {
-  if (window.paintActivated) { return }
+  if (window.activeTool !== "bucket") { return }
 
   const color = window.picker.color
   const rgba = color.rgbaString

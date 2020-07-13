@@ -58,6 +58,10 @@ body {
   --font-color-accent: var(--accent-color-dark);
 }
 
+body.picker {
+  cursor: crosshair;
+}
+
 .dark-theme {
   --background-color: var(--main-color-dark);
   --background-color-dark: var(--main-color);
@@ -243,7 +247,7 @@ footer {
 .toolbar button {
   height: var(--large-padding);
   background-color: var(--background-color);
-  transition: var(--transition);
+  transition: var(--transition) color;
 }
 
 .toolbar button svg, .toolbar split-button svg {
@@ -268,7 +272,7 @@ split-button {
   --split-width: var(--large-padding);
   --split-height: var(--large-padding);
   --split-dropdown-width: 10rem;
-  transition: var(--transition);
+  transition: var(--transition) color;
 }
 
 #palette {
