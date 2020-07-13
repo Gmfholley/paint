@@ -7,14 +7,10 @@ export function realColorAttribute(element, attribute = "background-color") {
 
   const bgColor = window.getComputedStyle(element)[attribute];
   if (bgColor === transparent) {
-    return realColorAttribute(element.parentElement);
+    return realColorAttribute(element.parentElement, attribute);
   } else {
     return bgColor;
   }
-}
-
-export function getFillColor(element) {
-  return window.getComputedStyle(element).fill
 }
 
 // Picker is a global
@@ -32,8 +28,8 @@ export function createPalettePicker(paletteElement) {
 
 export function colorPicker(event) {
   if (window.activeTool !== "picker") { return }
-  let attribute = "background-color"
 
+  let attribute = "background-color"
   if (event.target instanceof SVGElement) {
     attribute = "fill"
   }
