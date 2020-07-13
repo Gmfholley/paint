@@ -19,9 +19,27 @@ export function paintOnSvg(svg, event) {
 
 export function getCoordinatesRelativeToElement(event, element) {
   const rect = element.getBoundingClientRect()
-  const width = parseInt(element.getAttribute("width")) || rect.width
-  const height = parseInt(element.getAttribute("height")) || rect.height
 
+  const [width, height] = getSvgViewingWidth(element)
+
+  console.log(
+    event.pageX,
+    event.pageY,
+    event.clientX,
+    event.clientY,
+    event.screenX,
+    event.screenY,
+    window.getComputedStyle(element)["width"], // same as rect.width
+    window.getComputedStyle(element)["height"], // same as rect.height
+    rect.x,                                     // x upper left coordinate
+    rect.y                                      // y upper left coordinate
+   )
+
+  // For ordinary screens, no need to do anything but clientX, clientY
+  // But SVGs are manipulated both by CSS and their internal paths to be certain dimensions
+  // So compute relative to inner dimensions, since we are painting inside SVG
+
+  //  Get relative positions, per the changed dimensions of the svg
   const relXPos = event.clientX - rect.x
   const relYPos = event.clientY - rect.y
 
@@ -29,6 +47,28 @@ export function getCoordinatesRelativeToElement(event, element) {
   const equivalentPosY = relYPos * (height / rect.height)
 
   return [equivalentPosX, equivalentPosY]
+}
+
+function getSvgViewingWidth(element) {
+  // If width/height set directly, send those
+  const width = element.getAttribute("width")
+  const height = element.getAttribute("height")
+
+  if (width && height) { return [width, height] }
+
+  // if viewBox set directly, send that
+  const viewBox = element.getAttribute("viewBox")
+  if (!viewBox) { return getComputedHeightWidth(element) }
+
+  const viewBoxDimensions = viewBox.split(" ").map((i) => parseInt(i))
+  return [viewBoxDimensions[2] - viewBoxDimensions[0], viewBoxDimensions[3] - viewBoxDimensions[1]];
+}
+
+function getComputedHeightWidth(element) {
+  const width = window.getComputedStyle(element)["width"]
+  const height = window.getComputedStyle(element)["height"]
+
+  return [width, height]
 }
 
 export function activateTool(element, toolbarSelector) {
