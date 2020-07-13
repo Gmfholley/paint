@@ -1,14 +1,21 @@
 window.picker = {}
 window.usedColors = []
 
-export function getBackgroundColor(element) {
-  return window.getComputedStyle(element)["background-color"]
+export function realColorAttribute(element, attribute = "background-color") {
+  const transparent = 'rgba(0, 0, 0, 0)'
+  if (!element) return transparent;
+
+  const bgColor = window.getComputedStyle(element)[attribute];
+  if (bgColor === transparent) {
+    return realColorAttribute(element.parentElement);
+  } else {
+    return bgColor;
+  }
 }
 
 export function getFillColor(element) {
-  return window.getComputedStyle(element)["fill"]
+  return window.getComputedStyle(element).fill
 }
-
 
 // Picker is a global
 export function createPalettePicker(paletteElement) {
@@ -25,12 +32,13 @@ export function createPalettePicker(paletteElement) {
 
 export function colorPicker(event) {
   if (window.activeTool !== "picker") { return }
+  let attribute = "background-color"
 
-  const transparent = "rgba(0, 0, 0, 0)"
-  const bgColor = getBackgroundColor(event.target);
-  const fillColor = getFillColor(event.target);
-  const observedColor = bgColor === transparent ? fillColor : bgColor;
+  if (event.target instanceof SVGElement) {
+    attribute = "fill"
+  }
 
+  const observedColor = realColorAttribute(event.target, attribute);
   window.picker.setColor(observedColor);
 }
 

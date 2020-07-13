@@ -42,7 +42,7 @@ window.onload = function() {
   // tasks
   createPalettePicker(palette)
   svgWrapper.addEventListener('click', color)
-  svgWrapper.addEventListener('click', colorPicker)
+  document.addEventListener('click', colorPicker)
 
   svgWrapper.addEventListener('mousemove', paintOnSvgIfClicked.bind(this, svgWrapper))
   svgWrapper.addEventListener('mousedown', paintOnSvgIfClicked.bind(this, svgWrapper))

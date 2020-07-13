@@ -7,10 +7,10 @@ export function paintOnSvg(svg, event) {
 
   // Create
   const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+  const [x, y] = getCoordinatesRelativeToElement(event, svg)
   circle.setAttribute("fill", rgba)
   circle.setAttribute("stroke", rgba)
   circle.setAttribute("r", "30")
-  const [x, y] = getCoordinatesRelativeToElement(event, svg)
   circle.setAttribute("cx", x)
   circle.setAttribute("cy", y)
 
@@ -22,18 +22,18 @@ export function getCoordinatesRelativeToElement(event, element) {
 
   const [width, height] = getSvgViewingWidth(element)
 
-  console.log(
-    event.pageX,
-    event.pageY,
-    event.clientX,
-    event.clientY,
-    event.screenX,
-    event.screenY,
-    window.getComputedStyle(element)["width"], // same as rect.width
-    window.getComputedStyle(element)["height"], // same as rect.height
-    rect.x,                                     // x upper left coordinate
-    rect.y                                      // y upper left coordinate
-   )
+  // console.log(
+  //   event.pageX,
+  //   event.pageY,
+  //   event.clientX,
+  //   event.clientY,
+  //   event.screenX,
+  //   event.screenY,
+  //   window.getComputedStyle(element)["width"], // same as rect.width
+  //   window.getComputedStyle(element)["height"], // same as rect.height
+  //   rect.x,                                     // x upper left coordinate
+  //   rect.y                                      // y upper left coordinate
+  //  )
 
   // For ordinary screens, no need to do anything but clientX, clientY
   // But SVGs are manipulated both by CSS and their internal paths to be certain dimensions
@@ -72,14 +72,19 @@ function getComputedHeightWidth(element) {
 }
 
 export function activateTool(element, toolbarSelector) {
-  window.activeTool = element.getAttribute("id");
-  const toolItems = document.querySelectorAll(toolbarSelector);
+  const tool = element.getAttribute("id")
+  const body = document.querySelector("body")
+  window.activeTool = tool
 
+  const toolItems = document.querySelectorAll(toolbarSelector);
   Array.from(toolItems).forEach((el) => {
-    if (el.getAttribute("id") === window.activeTool) {
+    const elementTool = el.getAttribute("id")
+    if (elementTool === tool) {
       el.classList.add("active")
+      body.classList.add(elementTool)
     } else {
       el.classList.remove("active")
+      body.classList.remove(elementTool)
     }
   });
 }

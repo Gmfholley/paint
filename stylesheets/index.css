@@ -58,6 +58,10 @@ body {
   --font-color-accent: var(--accent-color-dark);
 }
 
+body.picker {
+  cursor: crosshair;
+}
+
 .dark-theme {
   --background-color: var(--main-color-dark);
   --background-color-dark: var(--main-color);
