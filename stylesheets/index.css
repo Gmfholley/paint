@@ -89,7 +89,7 @@ a:focus, a:active, a:hover {
   color: var(--font-color-light);
 }
 
-button, split-button {
+button, split-button, split-button {
   background-color: transparent;
   border: none;
   color: var(--font-color);
@@ -101,7 +101,7 @@ split-button {
   padding-top: 0px;
 }
 
-button:focus, button:active, button.active {
+button:focus, button:active, button.active, split-button.active [slot="main-button"] {
   border: var(--border-width) solid var(--font-color);
   border-radius: var(--xs-padding);
   padding: calc(var(--xs-padding) - var(--border-width));
@@ -240,7 +240,7 @@ footer {
   flex-wrap: wrap;
 }
 
-.toolbar button {
+.toolbar button, .toolbar button:not([slot="main-button"]) {
   width: 4rem;
 }
 

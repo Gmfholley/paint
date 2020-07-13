@@ -1,5 +1,4 @@
-window.picker = {}
-window.usedColors = []
+import { getGlobal, setGlobal } from './color-me-mine.js'
 
 export function realColorAttribute(element, attribute = "background-color") {
   const transparent = 'rgba(0, 0, 0, 0)'
@@ -15,35 +14,39 @@ export function realColorAttribute(element, attribute = "background-color") {
 
 // Picker is a global
 export function createPalettePicker(paletteElement) {
-    window.picker = new Picker(paletteElement); // eslint-disable-line no-undef
-    const picker = window.picker
-    picker.setOptions({ popup: false })
-    picker.show()
-    paletteElement.style.background = picker.color.rgbaString
+  const picker = new Picker(paletteElement) // eslint-disable-line no-undef
+  picker.setOptions({ popup: false })
+  picker.show()
+  paletteElement.style.background = picker.color.rgbaString
 
-    picker.onChange = function(color) {
-      paletteElement.style.background = color.rgbaString;
-    };
+  picker.onChange = function(color) {
+    paletteElement.style.background = color.rgbaString;
+  };
+
+  setGlobal("picker", picker);
 }
 
 export function colorPicker(event) {
-  if (window.activeTool !== "picker") { return }
+  if (getGlobal("activeTool") !== "picker") { return }
 
   let attribute = "background-color"
   if (event.target instanceof SVGElement) {
     attribute = "fill"
   }
 
-  const observedColor = realColorAttribute(event.target, attribute);
-  window.picker.setColor(observedColor);
+  const observedColor = realColorAttribute(event.target, attribute)
+
+  const picker = getGlobal("picker")
+  picker.setColor(observedColor);
 }
 
 export function color(event) {
-  if (window.activeTool !== "bucket") { return }
+  if (getGlobal("activeTool") !== "bucket") { return }
 
-  const color = window.picker.color
+  const color = getGlobal("picker").color
   const rgba = color.rgbaString
   event.target.style.fill = rgba
   event.target.style.stroke = rgba
-  window.usedColors.push(color)
+
+  getGlobal("usedColors").push(color)
 }

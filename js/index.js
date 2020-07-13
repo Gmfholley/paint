@@ -1,4 +1,4 @@
-import { uploadToSvg } from './upload.js'
+import { initGlobals } from './color-me-mine.js'
 import { createPalettePicker, color, colorPicker } from './color-picker.js'
 import { moveContentInline } from './content-support.js'
 import {
@@ -9,10 +9,18 @@ import {
   downloadSvgElementAsType,
   paintOnSvgIfClicked
 } from './helpers.js'
-import { activateTool } from './paintbrush.js'
-import { splitButtonSetup } from './split-button.js'
+import {
+  activateTool,
+  changeBrushSize
+} from './paintbrush.js'
+import {
+  splitButtonSetup,
+  splitButtonOnClick,
+} from './split-button.js'
+import { uploadToSvg } from './upload.js'
 
 window.onload = function() {
+  initGlobals();
   let imageUpload = document.querySelector("#image-upload"),
     imageInput = document.querySelector("#image-input"),
     svgWrapper = document.querySelector("#svg-wrapper"),
@@ -21,8 +29,8 @@ window.onload = function() {
   imageUpload.addEventListener(
     "click",
     (e) => {
-      imageInput.click();
-      e.preventDefault();
+      imageInput.click()
+      e.preventDefault()
     },
     false
   );
@@ -37,7 +45,8 @@ window.onload = function() {
   // Split button setup
   const templateSelector = "template#split-button"
   const buttonOnClick = downloadSvg.bind(this, svgWrapper)
-  splitButtonSetup(templateSelector, buttonOnClick)
+  splitButtonSetup(templateSelector)
+  splitButtonOnClick(document.querySelector('#download'), buttonOnClick)
 
   // tasks
   createPalettePicker(palette)
@@ -46,7 +55,6 @@ window.onload = function() {
 
   svgWrapper.addEventListener('mousemove', paintOnSvgIfClicked.bind(this, svgWrapper))
   svgWrapper.addEventListener('mousedown', paintOnSvgIfClicked.bind(this, svgWrapper))
-  // window.activeTool = "bucket";
 
   document.querySelector('#plus').addEventListener('click', magnifySvg.bind(this, svgWrapper))
   document.querySelector('#minus').addEventListener('click', minifySvg.bind(this, svgWrapper))
@@ -54,7 +62,17 @@ window.onload = function() {
 
   const toolSelectors = '.toolbar .tool';
   Array.from(document.querySelectorAll(toolSelectors)).forEach(element => {
-    element.addEventListener('click', activateTool.bind(this, element, toolSelectors), true)
+    const callback= activateTool.bind(this, element, toolSelectors)
+    if (element.tagName === 'split-button') {
+      return splitButtonOnClick(element, callback, true)
+    }
+
+    element.addEventListener('click', callback, true)
+  })
+
+  const brushSelectors = '#paint .brush';
+  Array.from(document.querySelectorAll(brushSelectors)).forEach(element => {
+    element.addEventListener('click', changeBrushSize.bind(this, element, brushSelectors), true)
   })
 
   document.querySelector('#download-svg').addEventListener('click', buttonOnClick)

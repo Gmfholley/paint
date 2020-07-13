@@ -28,5 +28,8 @@ export const splitButtonSetup = (templateSelector, mainCallback) => {
   if (!document.querySelector(templateSelector)) return setTimeout(splitButtonSetup.bind(this, templateSelector, mainCallback), 100)
 
   customElements.define('split-button', SplitButtonDefinition(templateSelector))
-  document.querySelector('split-button').addEventListener('button-press', mainCallback)
+}
+
+export const splitButtonOnClick = (element, mainCallback, useCapture = false) => {
+  document.querySelector('#download').addEventListener('button-press', mainCallback, useCapture)
 }
