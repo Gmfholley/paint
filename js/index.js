@@ -24,8 +24,8 @@ window.onload = function() {
   imageUpload.addEventListener(
     "click",
     (e) => {
-      imageInput.click();
-      e.preventDefault();
+      imageInput.click()
+      e.preventDefault()
     },
     false
   );
